@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thuật Toán Sắp Xếp Chèn (Insertion Sort)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .khung {
+            border: 1px solid #333;
+            padding: 20px;
+            max-width: 650px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 6px 14px;
+            font-size: 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        #ketQua {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        #chiTietCacBuoc {
+            background-color: #f4f4f4;
+            border: 1px dashed #666;
+            padding: 10px;
+            font-family: Consolas, monospace;
+            white-space: pre-wrap;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="khung">
+        <h2>Thuật Toán Sắp Xếp Chèn (Insertion Sort)</h2>
+        <p><strong>Mảng ban đầu:</strong> <span id="hienThiMang"></span></p>
+        <button onclick="chaySapXepChen()">Bắt đầu sắp xếp</button>
+        <div id="ketQua"></div>
+    </div>
+
+    <div class="khung">
+        <h3>Chi tiết từng bước chèn:</h3>
+        <div id="chiTietCacBuoc">Chưa thực hiện sắp xếp...</div>
+    </div>
+
+    <script>
+        /*
+        ========================================================================
+        CÁC BƯỚC THỰC HIỆN THUẬT TOÁN SẮP XẾP CHÈN (INSERTION SORT):
+
+        - Ý tưởng: Tương tự như cách sắp xếp các quân bài trên tay. Ta coi phần tử
+          đầu tiên đã được sắp xếp, sau đó lần lượt lấy từng phần tử tiếp theo
+          và chèn nó vào đúng vị trí thích hợp trong dãy đã sắp xếp phía trước.
+
+        - Bước 1: 
+            + Coi phần tử đầu tiên arr[0] là dãy con đã được sắp xếp 
+              (vì mảng có 1 phần tử thì luôn luôn có thứ tự).
+
+        - Bước 2: 
+            + Bắt đầu vòng lặp từ phần tử thứ hai (i = 1) đến cuối mảng (i < n):
+            + Lưu giá trị phần tử cần chèn vào biến tạm: key = arr[i].
+            + Đặt con trỏ j = i - 1 (chỉ số phần tử cuối cùng của dãy đã sắp xếp đứng trước nó).
+
+        - Bước 3: 
+            + So sánh key với các phần tử trong dãy đã sắp xếp (từ phải qua trái):
+            + Trong khi j >= 0 và arr[j] > key (với trường hợp sắp xếp tăng dần):
+                * Dịch chuyển phần tử arr[j] sang phải 1 vị trí: arr[j + 1] = arr[j].
+                * Giảm chỉ số j đi 1 đơn vị (j = j - 1) để tiếp tục so sánh với phần tử trước đó.
+
+        - Bước 4: 
+            + Khi dừng vòng lặp (tìm được vị trí mà arr[j] <= key hoặc j < 0):
+            + Chèn giá trị key vào vị trí thích hợp vừa tạo ra: arr[j + 1] = key.
+
+        - Bước 5: 
+            + Lặp lại Bước 2 đến Bước 4 cho các phần tử tiếp theo cho đến khi duyệt hết mảng.
+
+        - Bước 6: 
+            + Kết thúc, toàn bộ mảng đã được sắp xếp theo thứ tự tăng dần.
+
+        ========================================================================
+        */
+
+        const arr = [29, 10, 14, 37, 13];
+        document.getElementById("hienThiMang").innerText = "[" + arr.join(", ") + "]";
+
+        /**
+         * 2. Hàm cài đặt thuật toán sắp xếp chèn chuẩn
+         * @param {Array} a - Mảng cần sắp xếp
+         * @returns {Array} - Mảng đã được sắp xếp tăng dần
+         */
+        function insertionSort(a) {
+            let n = a.length;
+
+            // Bước 1 & 2: Bắt đầu từ phần tử thứ hai (i = 1)
+            for (let i = 1; i < n; i++) {
+                let key = a[i];  // Lưu phần tử cần chèn
+                let j = i - 1;   // Chỉ số phần tử đứng trước nó
+
+                // Bước 3: Dịch chuyển các phần tử lớn hơn key sang phải 1 vị trí
+                while (j >= 0 && a[j] > key) {
+                    a[j + 1] = a[j];
+                    j = j - 1;
+                }
+
+                // Bước 4: Chèn key vào vị trí đúng
+                a[j + 1] = key;
+            }
+            return a;
+        }
+
+        // 3. Hàm kích hoạt sắp xếp và hiển thị chi tiết từng bước ra màn hình
+        function chaySapXepChen() {
+            // Sao chép mảng gốc để thực hiện và ghi log
+            let a = [...arr];
+            let log = "";
+            let n = a.length;
+
+            for (let i = 1; i < n; i++) {
+                let key = a[i];
+                let j = i - 1;
+
+                log += `--- Vòng lặp i = ${i} (Lấy key = ${key} để chèn) ---\n`;
+                log += `Dãy đã sắp xếp trước đó: [${a.slice(0, i).join(", ")}]\n`;
+
+                while (j >= 0 && a[j] > key) {
+                    log += `  -> ${a[j]} > ${key}: Dịch chuyển ${a[j]} sang phải (vị trí index ${j + 1})\n`;
+                    a[j + 1] = a[j];
+                    j = j - 1;
+                }
+
+                a[j + 1] = key;
+                log += `  => Đặt key = ${key} vào vị trí index ${j + 1}\n`;
+                log += `Mảng sau bước ${i}: [${a.join(", ")}]\n\n`;
+            }
+
+            // Hiển thị kết quả mảng sau khi sắp xếp
+            const ketQuaEl = document.getElementById("ketQua");
+            ketQuaEl.innerText = "=> Kết quả sau khi sắp xếp: [" + a.join(", ") + "]";
+            ketQuaEl.style.color = "green";
+
+            // Hiển thị chi tiết từng bước thực hiện
+            document.getElementById("chiTietCacBuoc").innerText = log;
+        }
+    </script>
+</body>
+</html>
