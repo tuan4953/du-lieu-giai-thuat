@@ -39,19 +39,18 @@
     <script>
         /*
         ========================================================================
-        CÁC BƯỚC THỰC HIỆN THUẬT TOÁN TÌM KIẾM TUYẾN TÍNH (LINEAR SEARCH):
+        MÃ GIẢ THUẬT TOÁN TÌM KIẾM TUYẾN TÍNH (LINEAR SEARCH)
 
-        Bước 1: Bắt đầu từ phần tử đầu tiên của mảng, gán chỉ số duyệt i = 0.
-        Bước 2: So sánh giá trị của phần tử hiện tại arr[i] với giá trị cần tìm (x).
-        Bước 3: Nếu arr[i] == x:
-                -> Tìm thấy giá trị x tại vị trí index i.
-                -> Dừng thuật toán và trả về vị trí i.
-        Bước 4: Nếu arr[i] != x:
-                -> Tăng chỉ số i lên 1 đơn vị (i = i + 1) để chuyển sang phần tử tiếp theo.
-        Bước 5: Lặp lại Bước 2 và Bước 4 cho đến khi duyệt hết mảng (i >= độ dài mảng n).
-        Bước 6: Nếu duyệt hết toàn bộ mảng mà vẫn không tìm thấy:
-                -> Kết luận giá trị x không tồn tại trong mảng.
-                -> Trả về -1.
+        Thuật toán TimKiemTuyenTinh(A, n, x):
+            Đầu vào (Input) : Mảng A gồm n phần tử, giá trị cần tìm x
+            Đầu ra (Output) : Vị trí (chỉ số) của x trong A hoặc -1 nếu không tìm thấy
+
+            Bắt đầu:
+                Lặp i từ 0 đến n - 1:
+                    Nếu A[i] == x thì:
+                        Trả về i        // Tìm thấy, trả về vị trí index
+                Trả về -1               // Đã duyệt hết mảng nhưng không tìm thấy
+            Kết thúc
         ========================================================================
         */
 
@@ -60,15 +59,12 @@
         document.getElementById("hienThiMang").innerText = "[" + arr.join(", ") + "]";
 
         function timKiemTuyenTinh(a, x) {
-          
             for (let i = 0; i < a.length; i++) {
-                
                 if (a[i] === x) {
-                   
-                    return i;
+                    return i; // Tìm thấy phần tử tại vị trí i
                 }        
             }
-            return -1;
+            return -1; // Không tìm thấy trong mảng
         }
         function xuLyTimKiem() {
             const giaTriNhap = document.getElementById("soCanTim").value;

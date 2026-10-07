@@ -51,63 +51,41 @@
     <script>
         /*
         ========================================================================
-        CÁC BƯỚC THỰC HIỆN THUẬT TOÁN SẮP XẾP CHÈN (INSERTION SORT):
+        MÃ GIẢ THUẬT TOÁN SẮP XẾP CHÈN (INSERTION SORT)
 
-        - Ý tưởng: Tương tự như cách sắp xếp các quân bài trên tay. Ta coi phần tử
-          đầu tiên đã được sắp xếp, sau đó lần lượt lấy từng phần tử tiếp theo
-          và chèn nó vào đúng vị trí thích hợp trong dãy đã sắp xếp phía trước.
+        Thuật toán SapXepChen(A, n):
+            Đầu vào (Input) : Mảng A gồm n phần tử
+            Đầu ra (Output) : Mảng A đã sắp xếp tăng dần
 
-        - Bước 1: 
-            + Coi phần tử đầu tiên arr[0] là dãy con đã được sắp xếp 
-              (vì mảng có 1 phần tử thì luôn luôn có thứ tự).
-
-        - Bước 2: 
-            + Bắt đầu vòng lặp từ phần tử thứ hai (i = 1) đến cuối mảng (i < n):
-            + Lưu giá trị phần tử cần chèn vào biến tạm: key = arr[i].
-            + Đặt con trỏ j = i - 1 (chỉ số phần tử cuối cùng của dãy đã sắp xếp đứng trước nó).
-
-        - Bước 3: 
-            + So sánh key với các phần tử trong dãy đã sắp xếp (từ phải qua trái):
-            + Trong khi j >= 0 và arr[j] > key (với trường hợp sắp xếp tăng dần):
-                * Dịch chuyển phần tử arr[j] sang phải 1 vị trí: arr[j + 1] = arr[j].
-                * Giảm chỉ số j đi 1 đơn vị (j = j - 1) để tiếp tục so sánh với phần tử trước đó.
-
-        - Bước 4: 
-            + Khi dừng vòng lặp (tìm được vị trí mà arr[j] <= key hoặc j < 0):
-            + Chèn giá trị key vào vị trí thích hợp vừa tạo ra: arr[j + 1] = key.
-
-        - Bước 5: 
-            + Lặp lại Bước 2 đến Bước 4 cho các phần tử tiếp theo cho đến khi duyệt hết mảng.
-
-        - Bước 6: 
-            + Kết thúc, toàn bộ mảng đã được sắp xếp theo thứ tự tăng dần.
-
+            Bắt đầu:
+                Lặp i từ 1 đến n - 1:
+                    key = A[i]
+                    j = i - 1
+                    Trong khi (j >= 0 và A[j] > key):
+                        A[j + 1] = A[j]    // Dịch chuyển phần tử sang phải
+                        j = j - 1
+                    A[j + 1] = key         // Chèn key vào đúng vị trí
+            Kết thúc
         ========================================================================
         */
 
         const arr = [29, 10, 14, 37, 13];
         document.getElementById("hienThiMang").innerText = "[" + arr.join(", ") + "]";
 
-        /**
-         * 2. Hàm cài đặt thuật toán sắp xếp chèn chuẩn
-         * @param {Array} a - Mảng cần sắp xếp
-         * @returns {Array} - Mảng đã được sắp xếp tăng dần
-         */
         function insertionSort(a) {
             let n = a.length;
 
-            // Bước 1 & 2: Bắt đầu từ phần tử thứ hai (i = 1)
             for (let i = 1; i < n; i++) {
-                let key = a[i];  // Lưu phần tử cần chèn
-                let j = i - 1;   // Chỉ số phần tử đứng trước nó
+                let key = a[i];  // Lưu giá trị cần chèn
+                let j = i - 1;
 
-                // Bước 3: Dịch chuyển các phần tử lớn hơn key sang phải 1 vị trí
+                // Dịch chuyển các phần tử lớn hơn key sang phải
                 while (j >= 0 && a[j] > key) {
                     a[j + 1] = a[j];
                     j = j - 1;
                 }
 
-                // Bước 4: Chèn key vào vị trí đúng
+                // Chèn key vào đúng vị trí
                 a[j + 1] = key;
             }
             return a;

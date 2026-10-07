@@ -52,44 +52,27 @@
     <script>
         /*
         ========================================================================
-        CÁC BƯỚC THỰC HIỆN THUẬT TOÁN ĐỆ QUY TÍNH GIAI THỪA (n!):
+        MÃ GIẢ THUẬT TOÁN ĐỆ QUY TÍNH GIAI THỪA (FACTORIAL)
 
-        - Định nghĩa toán học:
-            n! = 1                 (với n = 0 hoặc n = 1)
-            n! = n * (n - 1)!      (với n > 1)
+        Thuật toán TinhGiaiThua(n):
+            Đầu vào (Input) : Số nguyên không âm n (n >= 0)
+            Đầu ra (Output) : Giá trị giai thừa n!
 
-        - CÁC BƯỚC THỰC HIỆN:
-        Bước 1: Kiểm tra tính hợp lệ của dữ liệu đầu vào.
-                Điều kiện: n phải là số nguyên không âm (n >= 0).
-                Nếu n < 0 thì không xác định được giai thừa.
-
-        Bước 2: Xác định điều kiện cơ sở (Neo đệ quy / Base Case):
-                + Nếu n == 0 hoặc n == 1:
-                    -> Trả về kết quả là 1 và dừng gọi đệ quy.
-                    -> Đây là điều kiện tiên quyết để thuật toán kết thúc, tránh lặp vô hạn (tràn ngăn xếp - Stack Overflow).
-
-        Bước 3: Xác định bước đệ quy (Lời gọi đệ quy / Recursive Step):
-                + Nếu n > 1:
-                    -> Gọi lại chính hàm tính giai thừa với giá trị nhỏ hơn 1 đơn vị: tinhGiaiThua(n - 1).
-                    -> Kết quả tại bước hiện tại = n * tinhGiaiThua(n - 1).
-
-        Bước 4: Cơ chế thu hồi và trả về kết quả (Unwinding Call Stack):
-                + Hệ thống sẽ lưu các lời gọi hàm tạm dừng vào ngăn xếp (Call Stack).
-                + Khi chạm đến điều kiện neo (n = 1), giá trị 1 được trả về và các phép nhân được tính ngược dần từ đáy lên đỉnh:
-                    tinhGiaiThua(1) = 1
-                    tinhGiaiThua(2) = 2 * tinhGiaiThua(1) = 2 * 1 = 2
-                    tinhGiaiThua(3) = 3 * tinhGiaiThua(2) = 3 * 2 = 6
-                    ...
-                    tinhGiaiThua(n) = n * tinhGiaiThua(n - 1)
+            Bắt đầu:
+                Nếu (n == 0 hoặc n == 1) thì:
+                    Trả về 1                          // Neo đệ quy (Điều kiện dừng)
+                Ngược lại:
+                    Trả về n * TinhGiaiThua(n - 1)    // Lời gọi đệ quy
+            Kết thúc
         ========================================================================
         */
 
         function tinhGiaiThua(n) {
-            // Bước 2: Điều kiện dừng (Neo đệ quy)
+            // Điều kiện dừng (Neo đệ quy)
             if (n === 0 || n === 1) {
                 return 1;
             }
-            // Bước 3: Lời gọi đệ quy
+            // Lời gọi đệ quy
             return n * tinhGiaiThua(n - 1);
         }
 
